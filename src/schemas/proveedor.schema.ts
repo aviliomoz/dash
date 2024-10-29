@@ -16,5 +16,6 @@ export type PrecioPorProveedor = {
     insumo: string,
     fecha: string,
     cantidad: string,
-    precio: string
+    precio: string,
+    um: string
 }

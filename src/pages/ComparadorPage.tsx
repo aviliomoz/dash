@@ -72,6 +72,7 @@ export const ComparadorPage = () => {
 
                 return [
                     insumo,
+                    insumoPA?.um!,
                     insumoPA?.fecha && format(new Date(insumoPA?.fecha.slice(0, 10)), "dd/MM/yyyy") || "-",
                     insumoPA?.precio && `S/ ${insumoPA?.precio}` || "-",
                     insumoPB?.fecha && format(new Date(insumoPB?.fecha.slice(0, 10)), "dd/MM/yyyy") || "-",
@@ -106,6 +107,7 @@ export const ComparadorPage = () => {
                     <thead>
                         <tr className="h-10">
                             <th rowSpan={2} className="text-start pl-4" >Insumos</th>
+                            <th rowSpan={2} className="text-start" >U.M.</th>
                             <th className="text-start truncate max-w-80 pr-10" colSpan={2} >{proveedores[0]?.razon_social}</th>
                             <th className="text-start truncate max-w-80 pr-10" colSpan={2} >{proveedores[1]?.razon_social}</th>
                         </tr>
@@ -118,11 +120,12 @@ export const ComparadorPage = () => {
                     </thead>
                     <tbody>
                         {comparativo.map(insumo => <TableRow>
-                            <TableData espacio tam="lg">{insumo[0]}</TableData>
+                            <TableData espacio tam="lg">{insumo[0].split(" - ")[0]}</TableData>
                             <TableData>{insumo[1]}</TableData>
                             <TableData>{insumo[2]}</TableData>
                             <TableData>{insumo[3]}</TableData>
                             <TableData>{insumo[4]}</TableData>
+                            <TableData>{insumo[5]}</TableData>
                         </TableRow>)}
                     </tbody>
                 </table>

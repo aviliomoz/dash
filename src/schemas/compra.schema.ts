@@ -51,7 +51,8 @@ export type CompraPorProveedor = {
     fecha: Date,
     total: number,
     cantidad: number,
-    precio: number
+    precio: number,
+    um: string
 }
 
 export type HistoricoPorInsumo = {
