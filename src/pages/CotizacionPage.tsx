@@ -54,6 +54,10 @@ export const CotizacionPage = () => {
         setCotizacion(cotizacion.map(linea => linea.insumo.nombre === insumo.nombre ? { ...linea, cantidad } : linea))
     }
 
+    const cambiarPrecio = (insumo: Insumo, precio: number) => {
+        setCotizacion(cotizacion.map(linea => linea.insumo.nombre === insumo.nombre ? { ...linea, precio } : linea))
+    }
+
     const descargarExcel = async () => {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Cotización');
@@ -155,7 +159,7 @@ export const CotizacionPage = () => {
             {cotizacion.map(linea => <TableRow key={linea.insumo.nombre}>
                 <TableData espacio tam="lg">{linea.insumo.nombre}</TableData>
                 <TableData><input className="outline-none w-16 bg-transparent" type="number" min={0} value={linea.cantidad} onChange={(e) => cambiarCantidad(linea.insumo, Number(e.target.value))} /></TableData>
-                <TableData>{`S/ ${linea.precio.toFixed(2)}`}</TableData>
+                <TableData>S/ <input className="outline-none w-16 bg-transparent" type="number" min={0} value={linea.precio} onChange={(e) => cambiarPrecio(linea.insumo, Number(e.target.value))} /></TableData>
                 <TableData>{`S/ ${(linea.cantidad * linea.precio).toFixed(2)}`}</TableData>
                 <TableData><Trash onClick={() => eliminarDeCotizacion(linea.insumo)} className="size-4 cursor-pointer" /></TableData>
             </TableRow>)}
