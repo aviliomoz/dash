@@ -16,6 +16,10 @@ export const PATHS: PathGroup[] = [
                         nombre: "Histórico",
                         url: "/compras/historico"
                     },
+                    {
+                        nombre: "Cotización",
+                        url: "/compras/cotizacion"
+                    },
                 ]
             },
         ]

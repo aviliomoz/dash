@@ -14,6 +14,7 @@ import { ComprasForm } from "./pages/ComprasForm";
 import { DashboardPage } from "./pages/DashboardPage";
 import { ComparadorPage } from "./pages/ComparadorPage";
 import { HistoricoPage } from "./pages/HistoricoPage";
+import { CotizacionPage } from "./pages/CotizacionPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/compras/actualizar" element={<ComprasForm />} />
             <Route path="/compras/comparador" element={<ComparadorPage />} />
             <Route path="/compras/historico" element={<HistoricoPage />} />
+            <Route path="/compras/cotizacion" element={<CotizacionPage />} />
             <Route path="/servicios" element={<p>Servicios page</p>} />
             <Route path="/club/empleados" element={<EmpleadosPage />} />
             <Route path="/club/empleados/:n" element={<EmpleadosForm />} />
