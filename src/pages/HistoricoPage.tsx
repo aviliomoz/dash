@@ -1,27 +1,16 @@
+import toast from "react-hot-toast"
 import { useEffect, useState } from "react"
 import { FiltroLocal } from "../components/FiltroLocal"
 import { ChevronDown, ChevronUp, LoaderCircle, X } from "lucide-react"
 import { ApiResponse } from "../utils/types"
 import { useFilters } from "../contexts/FiltersContext"
-import toast from "react-hot-toast"
 import { Table } from "../components/ui/Table"
 import { TableRow } from "../components/ui/TableRow"
 import { TableData } from "../components/ui/TableData"
 import { format } from "date-fns"
 import { api } from "../lib/axios"
-
-
-type Historico = {
-    fecha: string,
-    razon_social: string,
-    cantidad: number,
-    precio: number,
-    total: number,
-}[]
-
-type Insumo = {
-    nombre: string
-}
+import { HistoricoPorInsumo } from "../schemas/compra.schema"
+import { Insumo } from "../schemas/insumo.schema"
 
 export const HistoricoPage = () => {
 
@@ -29,7 +18,7 @@ export const HistoricoPage = () => {
     const [search, setSearch] = useState<string>("")
     const [insumo, setInsumo] = useState<Insumo>()
     const [resultados, setResultados] = useState<Insumo[]>([])
-    const [historico, setHistorico] = useState<Historico>([])
+    const [historico, setHistorico] = useState<HistoricoPorInsumo[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     const calcularVariacion = (precioAnterior: number, precioSiguiente: number) => {
@@ -51,7 +40,7 @@ export const HistoricoPage = () => {
         setLoading(true)
 
         try {
-            const { data } = await api.get<ApiResponse<Historico>>(`/compras/historico-por-insumo?insumo=${insumo?.nombre}&local=${local}`)
+            const { data } = await api.get<ApiResponse<HistoricoPorInsumo[]>>(`/compras/historico-por-insumo?insumo=${insumo?.nombre}&local=${local}`)
 
             if (data.ok && data.data) {
                 setHistorico(data.data)

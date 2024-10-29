@@ -37,7 +37,7 @@ export const ComprasPorInsumoWidget = () => {
     }, [local, fechaInicial, fechaFinal])
 
     return <Widget titulo="Compras por insumo" y_scroll loading={loading}>
-        <Table titulos={["Insumo", "Cantidad", "Precio promedio", "Facturado"]}>
+        <Table titulos={["Insumo", "Cantidad", "Precio más alto", "Facturado"]}>
             {compras.map(compra => <TableRow key={compra.insumo}>
                 <TableData espacio>{compra.insumo}</TableData>
                 <TableData >{Number(compra.cantidad).toLocaleString()}</TableData>

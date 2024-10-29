@@ -3,7 +3,7 @@ import { DatabaseBackup, LoaderCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { ApiResponse } from "../utils/types"
-import { CompraAgrupada } from "../schemas/compra.schema"
+import { CompraPorDocumento } from "../schemas/compra.schema"
 import { Table } from "../components/ui/Table"
 import { TableRow } from "../components/ui/TableRow"
 import { TableData } from "../components/ui/TableData"
@@ -16,14 +16,14 @@ import { api } from "../lib/axios"
 export const ComprasPage = () => {
 
     const { local, fechaInicial, fechaFinal } = useFilters()
-    const [compras, setCompras] = useState<CompraAgrupada[]>([])
+    const [compras, setCompras] = useState<CompraPorDocumento[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
     const getCompras = async () => {
         setLoading(true)
 
         try {
-            const { data } = await api.get<ApiResponse<CompraAgrupada[]>>(`/compras?local=${local}&fechaInicial=${format(fechaInicial, "yyyy-MM-dd")}&fechaFinal=${format(fechaFinal, "yyyy-MM-dd")}`)
+            const { data } = await api.get<ApiResponse<CompraPorDocumento[]>>(`/compras?local=${local}&fechaInicial=${format(fechaInicial, "yyyy-MM-dd")}&fechaFinal=${format(fechaFinal, "yyyy-MM-dd")}`)
 
             if (data.ok && data.data) {
                 setCompras(data.data)
@@ -64,9 +64,9 @@ export const ComprasPage = () => {
                 }).map(compra => <TableRow key={compra.documento}>
                     <TableData espacio>{format(compra.fecha, "dd/MM/yyyy")}</TableData>
                     <TableData>{compra.local}</TableData>
-                    <TableData>{compra.documento}</TableData>
+                    <TableData tam="md">{compra.documento}</TableData>
                     <TableData>{compra.ruc}</TableData>
-                    <TableData>{compra.razon_social}</TableData>
+                    <TableData tam="lg">{compra.razon_social}</TableData>
                     <TableData>{`S/ ${compra.total.toString()}`}</TableData>
                 </TableRow>)}
             </Table>

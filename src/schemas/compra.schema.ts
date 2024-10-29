@@ -24,7 +24,16 @@ export const compraAgrupadaSchema = z.object({
 })
 
 export type Compra = z.infer<typeof compraSchema>
-export type CompraAgrupada = z.infer<typeof compraAgrupadaSchema>
+
+export type CompraPorDocumento = {
+    fecha: Date;
+    semana: string;
+    documento: string;
+    ruc: string;
+    razon_social: string;
+    total: number;
+    local: string;
+}
 
 export type CompraPorSemana = {
     semana: string,
@@ -39,14 +48,14 @@ export type CompraPorInsumo = {
 }
 
 export type CompraPorProveedor = {
-    fecha: string,
+    fecha: Date,
     total: number,
     cantidad: number,
     precio: number
 }
 
 export type HistoricoPorInsumo = {
-    fecha: string,
+    fecha: Date,
     cantidad: number,
     precio: number,
     total: number,
