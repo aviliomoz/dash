@@ -161,9 +161,9 @@ export const CotizacionPage = () => {
             </TableRow>)}
         </Table>
 
-        <div className="border rounded-md shadow-md mt-4 ml-auto flex items-center gap-8 px-4 py-2.5 text-sm w-fit">
+        {cotizacion.length > 0 && <div className="border rounded-md shadow-md mt-4 ml-auto flex items-center gap-8 px-4 py-2.5 text-sm w-fit">
             <p><span className="font-semibold mr-2">Total:</span>S/ {cotizacion.reduce((acc, curr) => acc + (curr.cantidad * curr.precio), 0).toFixed(2)}</p>
             <button onClick={descargarExcel} className="flex items-center gap-2 bg-emerald-900 text-white px-3 py-1.5 shadow-md rounded-md hover:bg-emerald-800"><Download className="size-4" />Descargar en excel</button>
-        </div>
+        </div>}
     </section>
 }
