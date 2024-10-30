@@ -62,3 +62,13 @@ export type HistoricoPorInsumo = {
     total: number,
     razon_social: string
 }
+
+export type CompraAgrupadaPorProveedor = {
+    razon_social: string,
+    total: number
+}
+
+export type CompraPorCategoria = {
+    categoria: string,
+    total: number
+}

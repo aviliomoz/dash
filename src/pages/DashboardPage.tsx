@@ -1,6 +1,8 @@
 import { FiltroLocal } from "../components/FiltroLocal"
 import { RangeDatePicker } from "../components/RangeDatePicker"
+import { ComprasPorCategoriaWidget } from "../components/widgets/ComprasPorCategoriaWidget"
 import { ComprasPorInsumoWidget } from "../components/widgets/ComprasPorInsumoWidget"
+import { ComprasPorProveedorWidget } from "../components/widgets/ComprasPorProveedorWidget"
 import { ComprasPorSemanaWidget } from "../components/widgets/ComprasPorSemanaWidget"
 import { TotalComprasWidget } from "../components/widgets/TotalComprasWidget"
 
@@ -18,6 +20,10 @@ export const DashboardPage = () => {
                 <TotalComprasWidget />
             </div>
             <ComprasPorSemanaWidget />
+            <div className="grid grid-cols-2 gap-4 w-full">
+                <ComprasPorProveedorWidget />
+                <ComprasPorCategoriaWidget />
+            </div>
             <ComprasPorInsumoWidget />
         </div>
     </section>
