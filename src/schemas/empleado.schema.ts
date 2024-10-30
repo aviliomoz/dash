@@ -9,3 +9,7 @@ export const empleadoSchema = z.object({
 })
 
 export type Empleado = z.infer<typeof empleadoSchema>
+
+export type EmpleadoConRazonSocial = Empleado & {
+    razon_social: string
+}

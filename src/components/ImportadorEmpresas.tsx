@@ -18,6 +18,7 @@ export const ImportadorEmpresas = () => {
     const [empresas, setEmpresas] = useState<Empresa[]>([])
     const [validated, setValidated] = useState<boolean>(true)
     const [saving, setSaving] = useState<boolean>(false)
+    const [error, setError] = useState<string>("")
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -71,7 +72,7 @@ export const ImportadorEmpresas = () => {
                 toast.success(data.message)
                 navigate("/club/empresas")
             } else if (data.error) {
-                toast.error(data.error)
+                setError(data.error)
             }
         }
 
@@ -79,6 +80,9 @@ export const ImportadorEmpresas = () => {
     }
 
     useEffect(() => {
+
+        setError("")
+
         if (empresas.length > 0) {
             const validated = z.array(empresaSchema).safeParse(empresas)
             if (validated.success) {
@@ -87,7 +91,7 @@ export const ImportadorEmpresas = () => {
         }
     }, [empresas])
 
-    return <form onSubmit={handleSubmit} className="border bg-gray-100 rounded-lg p-8 h-fit shadow-md flex flex-col gap-4">
+    return <form onSubmit={handleSubmit} className={`border bg-gray-100 rounded-lg p-8 h-fit shadow-md flex flex-col gap-4 ${empresas.length > 0 && "w-full"}`}>
         <h4 className="font-semibold">Registro en lote</h4>
         <input className="text-sm" type="file" accept=".xlsx, .xls" onChange={handleUpload} />
         {!validated && <span className="text-sm text-red-700">Los datos del archivo no tienen la estructura válida</span>}
@@ -96,9 +100,12 @@ export const ImportadorEmpresas = () => {
             <Table titulos={["RUC", "Nombre"]}>
                 {empresas.map(empresa => <TableRow key={empresa.ruc}>
                     <TableData espacio>{empresa.ruc}</TableData>
-                    <TableData>{empresa.nombre}</TableData>
+                    <TableData tam="lg">{empresa.nombre}</TableData>
                 </TableRow>)}
             </Table>
+            {error && <div className="border border-red-600 p-4 mt-4 rounded-md shadow-sm text-sm w-fit">
+                <p>{error}</p>
+            </div>}
             <button className="bg-gray-900 hover:bg-gray-800 px-6 py-2 text-sm rounded-md shadow-md text-white mt-8">{saving ? <p className="flex items-center gap-2"><LoaderCircle className="size-4 animate-spin stroke-white" />Importando</p> : "Importar"}</button>
         </div>}
     </form>

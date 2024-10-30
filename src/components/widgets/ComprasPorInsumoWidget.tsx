@@ -39,10 +39,10 @@ export const ComprasPorInsumoWidget = () => {
     return <Widget titulo="Compras por insumo" y_scroll loading={loading}>
         <Table titulos={["Insumo", "Cantidad", "Precio más alto", "Facturado"]}>
             {compras.map(compra => <TableRow key={compra.insumo}>
-                <TableData espacio>{compra.insumo}</TableData>
-                <TableData >{Number(compra.cantidad).toLocaleString()}</TableData>
-                <TableData >{`S/ ${Number(compra.precio).toLocaleString()}`}</TableData>
-                <TableData >{`S/ ${Number(compra.total).toLocaleString()}`}</TableData>
+                <TableData espacio tam="lg">{compra.insumo}</TableData>
+                <TableData >{Number(compra.cantidad).toFixed(2)}</TableData>
+                <TableData >{`S/ ${Number(compra.precio).toFixed(2)}`}</TableData>
+                <TableData >{`S/ ${Number(compra.total).toFixed(2)}`}</TableData>
             </TableRow>)}
         </Table>
     </Widget>

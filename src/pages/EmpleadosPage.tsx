@@ -3,7 +3,7 @@ import { LoaderCircle, Plus, SquarePen } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { ApiResponse } from "../utils/types"
-import { Empleado } from "../schemas/empleado.schema"
+import { EmpleadoConRazonSocial } from "../schemas/empleado.schema"
 import { StatusTag } from "../components/ui/StatusTag"
 import { Table } from "../components/ui/Table"
 import { TableRow } from "../components/ui/TableRow"
@@ -15,7 +15,7 @@ export const EmpleadosPage = () => {
 
     const [searchParams] = useSearchParams()
 
-    const [empleados, setEmpleados] = useState<Empleado[]>([])
+    const [empleados, setEmpleados] = useState<EmpleadoConRazonSocial[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
     const getEmpleados = async () => {
@@ -25,7 +25,7 @@ export const EmpleadosPage = () => {
         setLoading(true)
 
         try {
-            const { data } = await api.get<ApiResponse<Empleado[]>>(`/empleados?search=${search}`)
+            const { data } = await api.get<ApiResponse<EmpleadoConRazonSocial[]>>(`/empleados?search=${search}`)
 
             if (data.ok && data.data) {
                 setEmpleados(data.data)
@@ -52,12 +52,12 @@ export const EmpleadosPage = () => {
             </div>
         </div>
         {loading ? <p className="text-gray-500 text-sm flex items-center gap-2"> <LoaderCircle className="size-4 animate-spin" />Cargando empleados</p> :
-            <Table titulos={["Documento", "Nombre", "Apellido", "RUC Empresa", "Estado", "Opciones"]}>
+            <Table titulos={["Documento", "Nombre", "Apellido", "Empresa", "Estado", "Opciones"]}>
                 {empleados.map(empleado => <TableRow key={empleado.documento}>
                     <TableData espacio>{empleado.documento}</TableData>
                     <TableData>{empleado.nombre}</TableData>
                     <TableData>{empleado.apellido}</TableData>
-                    <TableData>{empleado.empresa_ruc}</TableData>
+                    <TableData tam="md">{empleado.razon_social}</TableData>
                     <TableData><StatusTag status={empleado.estado} /></TableData>
                     <TableData>
                         <Link className="flex items-center gap-2 border rounded-md px-3 py-1.5 my-auto bg-white w-fit" to={`/club/empleados/${empleado.documento}`}><SquarePen className="size-4" />Editar empleado</Link>

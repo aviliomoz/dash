@@ -18,8 +18,10 @@ export const ImportadorEmpleados = () => {
     const [empleados, setEmpleados] = useState<Empleado[]>([])
     const [validated, setValidated] = useState<boolean>(true)
     const [saving, setSaving] = useState<boolean>(false)
+    const [error, setError] = useState<string>("")
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
         const file = e.target.files?.[0];
 
         if (file) {
@@ -70,10 +72,11 @@ export const ImportadorEmpleados = () => {
             const { data } = await api.post<ApiResponse<Empleado[]>>("/empleados/lote", empleados)
 
             if (data.ok && data.data) {
+                setError("")
                 toast.success(data.message)
                 navigate("/club/empleados")
             } else if (data.error) {
-                toast.error(data.error)
+                setError(data.error)
             }
         }
 
@@ -81,6 +84,9 @@ export const ImportadorEmpleados = () => {
     }
 
     useEffect(() => {
+
+        setError("")
+
         if (empleados.length > 0) {
             const validated = z.array(empleadoSchema).safeParse(empleados)
 
@@ -90,7 +96,7 @@ export const ImportadorEmpleados = () => {
         }
     }, [empleados])
 
-    return <form onSubmit={handleSubmit} className="border bg-gray-100 rounded-lg p-8 h-fit shadow-md flex flex-col gap-4">
+    return <form onSubmit={handleSubmit} className={`border bg-gray-100 rounded-lg p-8 h-fit shadow-md flex flex-col gap-4 ${empleados.length > 0 && "w-full"}`}>
         <h4 className="font-semibold">Registro en lote</h4>
         <input className="text-sm" type="file" accept=".xlsx, .xls" onChange={handleUpload} />
         {!validated && <span className="text-sm text-red-700">Los datos del archivo no tienen la estructura válida</span>}
@@ -104,6 +110,9 @@ export const ImportadorEmpleados = () => {
                     <TableData>{empleado.empresa_ruc}</TableData>
                 </TableRow>)}
             </Table>
+            {error && <div className="border border-red-600 p-4 mt-4 rounded-md shadow-sm text-sm w-fit">
+                <p>{error}</p>
+            </div>}
             <button className="bg-gray-900 hover:bg-gray-800 px-6 py-2 text-sm rounded-md shadow-md text-white mt-8">{saving ? <p className="flex items-center gap-2"><LoaderCircle className="size-4 animate-spin stroke-white" />Importando</p> : "Importar"}</button>
         </div>}
     </form>
